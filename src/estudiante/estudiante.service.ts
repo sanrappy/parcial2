@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { EstudianteEntity } from './estudiante.entity';
+import { BusinessError, BusinessLogicException } from '../shared/business-errors';
 
 @Injectable()
 export class EstudianteService {
@@ -19,7 +20,7 @@ export class EstudianteService {
     async findEstudianteById(id: string) : Promise<EstudianteEntity>{
         const estudiante = await this.estudianteRepository.findOne({where: {id}});
         if (!estudiante) {
-            return null;
+            throw new BusinessLogicException('Estudiante no encontrado', BusinessError.NOT_FOUND);
         }
         else {
             return estudiante;

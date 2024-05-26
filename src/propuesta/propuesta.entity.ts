@@ -1,7 +1,8 @@
 import { ProyectoEntity } from "../proyecto/proyecto.entity";
 import { ProfesorEntity } from "../profesor/profesor.entity";
-import { Column, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class PropuestaEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;

@@ -1,9 +1,12 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { EstudianteService } from './estudiante.service';
 import { EstudianteEntity } from './estudiante.entity';
 import { plainToInstance } from 'class-transformer';
+import { EstudianteDto } from './estudiante.dto';
+import { BusinessErrorsInterceptor } from '../shared/business-errors.interceptor';
 
 @Controller('estudiante')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class EstudianteController {
     constructor(private readonly estudianteService : EstudianteService) {}
 

@@ -1,6 +1,7 @@
-import { Column, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { PropuestaEntity } from "../propuesta/propuesta.entity";
 
+@Entity()
 export class ProfesorEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;

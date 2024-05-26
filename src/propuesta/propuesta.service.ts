@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PropuestaEntity } from './propuesta.entity';
+import { BusinessLogicException, BusinessError } from '../shared/business-errors';
 
 @Injectable()
 export class PropuestaService {
@@ -17,7 +18,7 @@ export class PropuestaService {
     async findPropuestaById(id: string) {
         const propuesta = await this.propuestaRepository.findOne({where: {id}, relations: ['profesores']});
         if (!propuesta) {
-            return null;
+            throw new BusinessLogicException('Propuesta no encontrada', BusinessError.NOT_FOUND);
         }
         else {
             return propuesta;
@@ -32,8 +33,11 @@ export class PropuestaService {
 
     async deletePropuesta(id: string) : Promise<PropuestaEntity>{
         const propuesta = await this.propuestaRepository.findOne({where: {id}});
-        if(!propuesta || propuesta.proyecto != null){
-            return null;
+        if(!propuesta){
+            throw new BusinessLogicException('Propuesta no encontrada.', BusinessError.NOT_FOUND);
+        }
+        else if(propuesta.proyecto != null){
+            throw new BusinessLogicException('La propuesta tiene un proyecto asignado.', BusinessError.PRECONDITION_FAILED);
         }
         else{
             await this.propuestaRepository.delete({id});

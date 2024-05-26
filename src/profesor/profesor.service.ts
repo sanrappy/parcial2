@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProfesorEntity } from './profesor.entity';
+import { BusinessError, BusinessLogicException } from '../shared/business-errors';
 
 @Injectable()
 export class ProfesorService {
@@ -17,7 +18,7 @@ export class ProfesorService {
     async findProfesorById(id: string) : Promise<ProfesorEntity>{
         const profesor = await this.profesorRepository.findOne({where: {id}});
         if (!profesor) {
-            return null;
+            throw new BusinessLogicException('Profesor no encontrado', BusinessError.NOT_FOUND);
         }
         else {
             return profesor;
@@ -27,7 +28,7 @@ export class ProfesorService {
     async eliminarProfesorId(id: string) : Promise<ProfesorEntity>{
         const profesor = await this.profesorRepository.findOne({where: {id}});
         if(!profesor){
-            return null;
+            throw new BusinessLogicException('Profesor no encontrado', BusinessError.NOT_FOUND);
         }
         else{
             await this.profesorRepository.delete({id});
@@ -38,7 +39,7 @@ export class ProfesorService {
     async eliminarProfesorCedula(cedula: number) : Promise<ProfesorEntity>{
         const profesor = await this.profesorRepository.findOne({where: {cedula}});
         if(!profesor){
-            return null;
+            throw new BusinessLogicException('Profesor no encontrado', BusinessError.NOT_FOUND);
         }
         else{
             await this.profesorRepository.delete({cedula});
