@@ -1,9 +1,9 @@
 import { IsNotEmpty, IsString, IsNumber } from "class-validator";
 
 export class ProfesorDto {
-    @IsNumber()
+    @IsString()
     @IsNotEmpty()
-    readonly cedula: number;
+    readonly cedula: string;
 
     @IsString()
     @IsNotEmpty()

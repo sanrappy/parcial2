@@ -27,7 +27,7 @@ export class ProfesorController {
         return await this.profesorService.eliminarProfesorId(id);
     }
 
-    @Delete(':cedula')
+    @Delete('/cedula/:cedula')
     @HttpCode(204)
     async eliminarProfesorCedula(@Param('cedula') cedula: number){
         return await this.profesorService.eliminarProfesorCedula(cedula);

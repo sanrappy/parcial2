@@ -1,4 +1,4 @@
-import { Controller, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseInterceptors } from '@nestjs/common';
 import { EstudianteService } from './estudiante.service';
 import { EstudianteEntity } from './estudiante.entity';
 import { plainToInstance } from 'class-transformer';
@@ -11,7 +11,7 @@ export class EstudianteController {
     constructor(private readonly estudianteService : EstudianteService) {}
 
     @Post()
-    async crearEstudiante() {
+    async crearEstudiante(@Body() EstudianteDto : EstudianteDto){
         const estudiante : EstudianteEntity = plainToInstance(EstudianteEntity, EstudianteDto);
         return await this.estudianteService.crearEstudiante(estudiante);
     }
